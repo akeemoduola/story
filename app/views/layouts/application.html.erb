@@ -11,16 +11,36 @@
   <body>
     <nav class="navbar sticky-top navbar-dark bg-dark">
       <%= link_to "Story", root_path, class: "navbar-brand" %>
-      <!-- <ul class="nav justify-content-end">
+      <p class="navbar-text pull-right">
+      <% if user_signed_in? %>
+        Logged in as <strong><%= current_user.email %></strong>.
+      </p>
+      <ul class="nav justify-content-end">
         <li class="nav-item">
-          <a class="nav-link" href="#">Login</a>
+          <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %>
+        </li>
+        <li>
+          <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+        </li>
+      </ul>
+      <% else %>
+      <ul class="nav justify-content-end">
+        <li class="nav-item">
+          <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">SignUp</a>
+          <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
         </li>
-      </ul> -->
+      </ul>
+      <% end %>
     </nav>
     <div class="container">
+      <% if notice %>
+        <p class="alert alert-success"><%= notice %></p>
+      <% end %>
+      <% if alert %>
+        <p class="alert alert-danger"><%= alert %></p>
+      <% end %>
       <%= yield %>
     </div>
   </body>
